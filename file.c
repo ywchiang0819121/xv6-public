@@ -92,6 +92,15 @@ filestat(struct file *f, struct stat *st)
   return -1;
 }
 
+int 
+flstat(struct file *f, int *lockstatus){
+  if(f->type == FD_INODE){
+    *lockstatus = f->ip->lock.locked;
+    return 0;
+  }
+  return -1;
+}
+
 // Read from file f.
 int
 fileread(struct file *f, char *addr, int n)
